@@ -3,8 +3,12 @@ from flask import Flask, jsonify, Blueprint, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
+
+from flask_cors import CORS
 # Create the app
 app = Flask(__name__)
+CORS(app)
+
 
 
 # Get the path to the instance folder
