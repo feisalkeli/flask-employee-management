@@ -93,7 +93,7 @@ def update_user(user_id):
         return jsonify(message="An error occurred while updating user information"), 500
 
 
-@user_bp.route("/create_user", methods=['POST'])
+@user_bp.route("/user/create_user", methods=['POST'])
 def create_user():
     first_name = request.json.get("firstName")
     last_name = request.json.get("lastName")
