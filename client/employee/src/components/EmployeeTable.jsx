@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-const EmployeeTable = ({ employees }) => {
+const EmployeeTable = ({ employees, onDelete }) => {
   return (
     <div className="p-4">
       <table className="table table-dark table-striped">
@@ -25,7 +25,12 @@ const EmployeeTable = ({ employees }) => {
                 <Link to={`/edit/${employee.id}`} className="btn btn-primary">
                   EDIT
                 </Link>
-                <button className="btn btn-danger">DELETE</button>
+                <button
+                  className="btn btn-danger "
+                  onClick={() => onDelete(employee.id)}
+                >
+                  DELETE
+                </button>
               </td>
             </tr>
           ))}

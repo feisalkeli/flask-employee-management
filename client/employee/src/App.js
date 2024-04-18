@@ -25,14 +25,43 @@ function App() {
   useEffect(() => {
     fetchData();
   }, []);
-
+  // Function to handle deleting an employee
+  const handleDeleteEmployee = async (employeeId) => {
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:5000/user/user/delete_user/${employeeId}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to delete employee");
+      }
+      // Update local state by removing the deleted employee
+      const updatedEmployees = employees.filter(
+        (employee) => employee.id !== employeeId
+      );
+      setEmployees(updatedEmployees);
+    } catch (error) {
+      console.error("Error deleting employee:", error);
+    }
+  };
   return (
     <Router>
+      {<WelcomeText employees={employees} />}
       <Routes>
-        <Route path="/" element={<WelcomeText />} />
-        <Route path="/" element={<EmployeeTable employees={employees} />} />
+        <Route
+          path="/"
+          element={
+            <EmployeeTable
+              employees={employees}
+              onDelete={handleDeleteEmployee}
+            />
+          }
+        />
+        {/* <Route path="/" element={<WelcomeText />} /> */}
         <Route path="/edit/:employeeid" element={<EditForm />} />
-        <Route path="/post" element={<PostForm />} />
+        <Route path="/post" element={<PostForm employees={employees} />} />
       </Routes>
     </Router>
   );

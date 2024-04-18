@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-const PostForm = () => {
+const PostForm = ({ employees }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -31,8 +31,6 @@ const PostForm = () => {
       if (!response.ok) {
         throw new Error("Failed to post data");
       }
-      // Handle success, such as displaying a success message
-      console.log("Data posted successfully");
     } catch (error) {
       console.error("Error posting data:", error);
       // Handle error, such as displaying an error message to the user

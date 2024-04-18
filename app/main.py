@@ -68,7 +68,7 @@ def get_single_user(user_id):
         return jsonify(message='User with the id could not be found'), 404
 
 
-@user_bp.route("/user/<int:user_id>", methods=["PATCH"])
+@user_bp.route("/user/<int:user_id>", methods=["PUT"])
 def update_user(user_id):
     user = User.query.get(user_id)
     if not user:
@@ -111,6 +111,24 @@ def create_user():
     except Exception as e:
         db.session.rollback()
         return jsonify(message="Could not create user", error=str(e)), 400
+    
+    
+# Route to handle delete requests for a specific employee
+@user_bp.route("/user/delete_user/<int:employee_id>", methods=["DELETE"])
+def delete_employee(employee_id):
+    # Find the employee with the given ID
+    employee = User.query.get(employee_id)
+    if employee:
+        try:
+            db.session.delete(employee)
+            db.session.commit()
+            return jsonify(message="Employee deleted successfully"), 200
+        except Exception as e:
+            db.session.rollback()
+            return jsonify(message="An error occurred while deleting employee"), 500
+    else:
+        # If employee doesn't exist, return a 404 error
+        return jsonify(message="Employee not found"), 404
 
 
 @user_bp.errorhandler(404)
